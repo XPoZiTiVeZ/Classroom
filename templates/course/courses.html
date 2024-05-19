@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}" type="text/css">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        <ul class="courses">
+            {% for course in courses %}
+            <li class="course">
+                <a href="{% url 'course' course_uuid=course.uuid %}" class="d-block">
+                    {{ course.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}" type="text/css">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        <table>
+            <tr>
+                <th>Недавние курсы</th><th>Недавние доски</th><th>Недавние звонки</th>
+            </tr>
+            {% if recent_items %}
+                {% for recent in recent_items %}
+                <tr>
+                    <td>{{ recent.course.name }}</td><td>{{ recent.board.name }}</td><td>{{ recent.call }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Нет</td><td>Нет</td><td>Нет</td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+</div>
+{% endblock content %}

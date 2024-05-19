@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}" type="text/css">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        <a class="d-inline-block mb-3" href="{% url 'course' course_uuid=course.uuid %}">Назад к курсу</a>
+        <form class="mb-5" id="course-name-change-form" action="{% url 'change-name-course' course_uuid=course.uuid %}" method="POST">
+            {% csrf_token %}
+            <input class="name me-auto form-control mb-3" name="name" type="text" value="{{ course.name }}" autocomplete="off">
+            <button class="btn btn-outline-success" type="submit">Изменить имя</button>
+        </form>
+        <form class="mb-5" id="course-description-change-form" action="{% url 'change-description-course' course_uuid=course.uuid %}" method="POST">
+            {% csrf_token %}
+            <textarea class="description form-control mb-3" name="description" form="course-description-change-form" rows="10" autocomplete="off">{{ course.description }}</textarea>
+            <button class="btn btn-outline-success" type="submit">Изменить описание</button>
+        </form>
+        <div class="user_lists row">
+            <div class="col col-lg-6 col-12 mb-5">
+                <h4>Список учатников</h4>
+                {% if members %}
+                <div class="members">
+                    {% if members.owners %}
+                        <div class="mb-5">
+                            <small>Владельцы</small>
+                            <hr class="m-0"></hr>
+                            {% for member in members.owners %}
+                            <div class="member">
+                                <a class="d-block me-auto" href="{% url 'profile' user_uuid=member.uuid %}">{{ member.email }}</a>
+                                <li class="dropdown" style="list-style-type: none;">
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle short-btn d-none" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle full-btn" data-bs-toggle="dropdown" aria-expanded="false">Управлять</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'add-to-owners' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать владельцем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-teachers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учителем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-students' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учеником</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-observers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать наблюдателем</a></li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item" href="{% url 'delete-from-course' course_uuid=course.uuid user_uuid=member.uuid %}">Удалить</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if members.teachers %}
+                        <div class="mb-5">
+                            <small>Учителя</small>
+                            <hr class="m-0"></hr>
+                            {% for member in members.teachers %}
+                            <div class="member">
+                                <a class="d-block me-auto" href="{% url 'profile' user_uuid=member.uuid %}">{{ member.email }}</a>
+                                <li class="dropdown" style="list-style-type: none;">
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle short-btn d-none" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle full-btn" data-bs-toggle="dropdown" aria-expanded="false">Управлять</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'add-to-owners' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать владельцем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-teachers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учителем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-students' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учеником</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-observers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать наблюдателем</a></li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item" href="{% url 'delete-from-course' course_uuid=course.uuid user_uuid=member.uuid %}">Удалить</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if members.students %}
+                        <div class="mb-5">
+                            <small>Ученики</small>
+                            <hr class="m-0"></hr>
+                            {% for member in members.students %}
+                            <div class="member">
+                                <a class="d-block me-auto" href="{% url 'profile' user_uuid=member.uuid %}">{{ member.email }}</a>
+                                <li class="dropdown" style="list-style-type: none;">
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle short-btn d-none" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle full-btn" data-bs-toggle="dropdown" aria-expanded="false">Управлять</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'add-to-owners' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать владельцем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-teachers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учителем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-students' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учеником</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-observers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать наблюдателем</a></li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item" href="{% url 'delete-from-course' course_uuid=course.uuid user_uuid=member.uuid %}">Удалить</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if members.observers %}
+                        <div>
+                            <small>Наблюдатели</small>
+                            <hr class="m-0"></hr>
+                            {% for member in members.observers %}
+                            <div class="member">
+                                <a class="d-block me-auto" href="{% url 'profile' user_uuid=member.uuid %}">{{ member.email }}</a>
+                                <li class="dropdown" style="list-style-type: none;">
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle short-btn d-none" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <button type="button" class="btn btn-outline-success dropdown-toggle full-btn" data-bs-toggle="dropdown" aria-expanded="false">Управлять</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{% url 'add-to-owners' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать владельцем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-teachers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учителем</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-students' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать учеником</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'add-to-observers' course_uuid=course.uuid user_uuid=member.uuid %}">Сделать наблюдателем</a></li>
+                                        <hr class="dropdown-divider">
+                                        <li><a class="dropdown-item" href="{% url 'delete-from-course' course_uuid=course.uuid user_uuid=member.uuid %}">Удалить</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <h1>Никого нет</h1>
+                <p>Пригласите кого-нибудь по ссылке</p>
+                {% endif %}
+            </div>
+            <div class="col col-lg-6 col-12 mb-5">
+                <h4>Заявки пользователей</h4>
+                {% if user_query %}
+                <div class="user_query">
+                    {% for user in user_query %}
+                    <div class="user">
+                        <a class="d-block me-auto" href="{% url 'profile' user_uuid=user.uuid %}">{{ user.email }}</a>
+                        <a type="button" class="btn btn-outline-success short-btn d-none me-2" href="{% url 'accept-user' course_uuid=course.uuid user_uuid=user.uuid %}">Да</a>
+                        <a type="button" class="btn btn-outline-success short-btn d-none" href="{% url 'reject-user' course_uuid=course.uuid user_uuid=user.uuid %}">Нет</a>
+                        <a type="button" class="btn btn-outline-success full-btn me-2" href="{% url 'accept-user' course_uuid=course.uuid user_uuid=user.uuid %}">Принять</a>
+                        <a type="button" class="btn btn-outline-success full-btn" href="{% url 'reject-user' course_uuid=course.uuid user_uuid=user.uuid %}">Отклонить</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <h1>Никого нет</h1>
+                <p>Пригласите кого-нибудь по ссылке</p>
+                {% endif %}
+            </div>
+        </div>
+        <a class="btn btn-outline-danger" href="{% url 'delete-course' course_uuid=course.uuid %}">Удалить курс</a>
+    </div>
+</div>
+{% endblock content %}

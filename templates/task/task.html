@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}" type="text/css">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        <div class="d-flex links mb-3">
+            <a class="me-auto" href="{% url 'course' course_uuid=course.uuid %}">Назад к курсу</a>
+            {% if request.user in course.owners.all or request.user.is_superuser%}
+            <a href="{% url 'admin-task' task_uuid=task.uuid %}">Настройки задания</a>
+            {% endif %}
+        </div>
+        <div class="d-flex align-items-baseline" style="flex-wrap: wrap;">
+            <h1 class="d-inline-block me-auto">{{ task.name }}</h1>
+            <h6 class="d-inline-block">Курс от {{ task.created_at }}</h6>
+        </div>
+        <p class="m-0">Закрывается в {{ task.closing_at }}</p>
+        <p class="mb-5">{{ task.description }}</p>
+        {% if request.user in course.owners.all %}
+        <ul class="solutions">
+            {% for solution in solutions %}
+                {% if solution.1 is not None %}
+                <li class="solution">
+                    <a class="d-block" href="{% url 'solution' task_uuid=solution.1.uuid %}">
+                        <div class="d-flex align-items-baseline" style="flex-wrap: wrap;">
+                            {% if solution.0.first_name and solution.0.last_name %}
+                            <p class="d-inline-block m-0 me-auto">{{ solution.0.first_name }} {{ solution.0.last_name }}</p>
+                            {% else %}
+                            <p class="d-inline-block m-0 me-auto">{{ solution.0.username }}</p>
+                            {% endif %}
+                            <p class="d-inline-block mb-0 me-3">Сдано {{ solution.1.created_at }}</p>
+                            {% if solution.grade is None %}
+                            <p>Не оценено</p>
+                            {% else %}
+                            <p>{{ solution.grade }}/{{ task.higher_grade }}</p>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+                {% else %}
+                <li class="solution">
+                    <a class="d-block .solution-link">
+                        <div class="d-flex align-items-baseline">
+                            {% if solution.0.first_name and solution.0.last_name %}
+                            <p class="d-inline-block m-0 me-auto">{{ solution.0.first_name }} {{ solution.0.last_name }}</p>
+                            {% else %}
+                            <p class="d-inline-block m-0 me-auto">{{ solution.0.username }}</p>
+                            {% endif %}
+                            <p class="d-inline-block m-0">Не сдано</p>
+                        </div>
+                    </a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+        
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

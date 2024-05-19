@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <form id="addcourse-form" method="POST" style="min-width: 300px;max-width: 720px;height: fit-content;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input name="course" class="form-control mb-5" type="text" placeholder="Название курса" autocomplete="off" required>
+            <textarea name="description" class="form-control mb-5" type="text" placeholder="Описание курса" style="min-height: 100px;" autocomplete="off"></textarea>
+            <button type="submit" class="btn btn-outline-success">Создать курс</button>
+            <small>
+                <a href="{% url 'add-course' %}">Добавить курс</a>
+            </small>
+        </form>
+    </form>
+</div>
+{% endblock content %}

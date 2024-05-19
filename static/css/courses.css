@@ -1,0 +1,165 @@
+@media (max-width: 576px) {
+    .short-btn {
+        display: block !important;
+    }
+    .full-btn {
+        display: none !important;
+    }
+}
+
+.content {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 512px;
+    background-color: var(--secondery-bg-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.content table {
+    width: 100%;
+}
+
+.content table th,
+.content table td {
+    width: 33.3%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.courses {
+    padding: 0;
+}
+
+.course {
+    background-color: var(--primary-bg-color);
+    list-style-type: none;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.course a {
+    width: 100%;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+.tasks {
+    padding: 0;
+}
+
+.task {
+    background-color: var(--primary-bg-color);
+    list-style-type: none;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.task a {
+    width: 100%;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+.solutions {
+    padding: 0;
+}
+
+.solution {
+    background-color: var(--primary-bg-color);
+    list-style-type: none;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.solution a {
+    width: 100%;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+#course-description-change-form .description {
+    height: auto;
+}
+
+.members,
+.user_query {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.members {
+    min-height: 250px;
+}
+
+.user_query {
+    min-height: 100px;
+}
+
+.members {
+    padding-bottom: 160px;
+}
+
+.member,
+.user {
+    display: flex;
+    min-height: 50px;
+    width: 100%;
+    align-items: center;
+}
+
+.member a {
+    width: 200px;
+    overflow-x: auto;
+    color: var(--special-color) !important;
+}
+
+.user a:first-child {
+    width: 140px;
+    overflow-x: auto;
+    color: var(--special-color) !important;
+}
+
+.member .dropdown-menu {
+    width: fit-content !important;
+}
+
+.member .dropdown-menu li,
+.member .dropdown-item {
+    height: 25px;
+    width: 200px;
+    line-height: 25px;
+}
+
+.members,
+.user_query {
+    --sb-track-color: #212121;
+    --sb-thumb-color: #00fff5;
+    --sb-size: 4px;
+}
+
+.members::-webkit-scrollbar,
+.user_query::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+.members::-webkit-scrollbar-track,
+.user_query::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 4px;
+}
+
+.members::-webkit-scrollbar-thumb,
+.user_query::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 4px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    }
+}

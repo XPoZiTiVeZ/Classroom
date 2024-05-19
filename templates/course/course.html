@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}" type="text/css">
+{% endblock head %}
+
+{% block content %}
+<div class="container">
+    <div class="content">
+        <div class="d-flex links mb-3">
+            <a class="me-auto" href="{% url 'courses' %}">Назад к курсам</a>
+            {% if request.user in course.owners.all or request.user.is_superuser%}
+            <a href="{% url 'admin-course' course_uuid=course.uuid %}">Настройки курса</a>
+            {% endif %}
+        </div>
+        <div class="d-flex align-items-baseline" style="flex-wrap: wrap;">
+            <h1 class="d-inline-block me-auto">{{ course.name }}</h1>
+            <h6 class="d-inline-block">Курс от {{ course.created_at }}</h6>
+        </div>
+        <p>{{ course.description }}</p>
+        <ul class="tasks">
+            {% for task in course.tasks.all %}
+            <li class="task">
+                <a class="d-block" href="{% url 'task' task_uuid=task.uuid %}">
+                    <div class="d-flex align-items-baseline mb-4">
+                        <h4 class="d-inline-block m-0 me-auto">{{ task.name }}</h4>
+                        <h6 class="d-inline-block m-0">{{ task.created_at }}</h6>
+                    </div>
+                    <p class="m-0">Закрывается в {{ task.closing_at }}</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}
